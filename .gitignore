@@ -1,0 +1,7 @@
+node_modules
+tools/*.sh
+tools/*.zip
+dist
+output
+src/config
+data.json
