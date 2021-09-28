@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
     "start": "ts-node src/index.ts",
     "checkout": "ts-node src/task/checkoutCount.ts",
-    "postinstall": "npm run build",
     "prepare": "husky install"
   },
   "author": "sspin",
