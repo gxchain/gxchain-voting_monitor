@@ -16,7 +16,7 @@ const gxclient = new GXClient(
 );
 
 const STATE_FILE = path.resolve("./output/gxc.json");
-const INITIAL_BLOCK = 37900600;
+const INITIAL_BLOCK = config.gxc.initial_block;
 let latestBlock = INITIAL_BLOCK;
 let currentBlock = INITIAL_BLOCK;
 
