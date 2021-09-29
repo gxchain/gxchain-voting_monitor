@@ -47,5 +47,3 @@ Voter.init(
     tableName: "voting_monitor",
   }
 );
-
-export default Voter;

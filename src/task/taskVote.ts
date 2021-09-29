@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import Voter from "../models/Voter";
+import { Voter } from "../models/Voter";
 import { logger } from "../logger/logger";
 import { GXClient } from "gxclient";
 import { config } from "../config/config";

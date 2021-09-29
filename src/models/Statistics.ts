@@ -44,5 +44,3 @@ Statistics.init(
     tableName: "voting_statistic",
   }
 );
-
-export default Statistics;

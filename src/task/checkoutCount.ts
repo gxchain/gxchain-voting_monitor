@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import Voter from "../models/Voter";
-import Statistics from "../models/statistics";
+import { Voter } from "../models/Voter";
+import { Statistics } from "../models/Statistics";
 import Snapshot from "../models/Snapshot";
 import { logger } from "../logger/logger";
 import { sequelize } from "../db";
