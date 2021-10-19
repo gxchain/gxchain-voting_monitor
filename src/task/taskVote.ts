@@ -9,7 +9,7 @@ const deserializeCallData =
   require("gxbjs/dist/tx_serializer").deserializeCallData;
 import { sequelize } from "../db";
 
-const gxclient = new GXClient(
+export const gxclient = new GXClient(
   config.gxc.key,
   config.gxc.account,
   config.gxc.network
