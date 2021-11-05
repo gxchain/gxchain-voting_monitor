@@ -22,6 +22,7 @@ curl 127.0.0.1:port/api/voter | json_pp
          "changeTimes" : 4,
          "updatedAt" : "2021-09-29T08:29:59.000Z",
          "voteGXCNumber" : 7642,
+         "voteGXCNumberHourly" : 7642,
          "votingstate" : false,
          "userId" : "1.2.22",
          "userName" : "dev",
@@ -31,6 +32,7 @@ curl 127.0.0.1:port/api/voter | json_pp
    "resultTrue" : [],
    "resultFalse" : [
       {
+         "voteGXCNumberHourly" : 7642,
          "voteGXCNumber" : 7642,
          "lastchangeTxid" : "7eeff0afa395ce6349f6753a16d7c7f18801e327",
          "changeTimes" : 4,
@@ -48,6 +50,7 @@ curl 127.0.0.1:port/api/voter | json_pp
 - resultFalse：所有投False人的信息
   
 --------------
+- voteGXCNumberHourly:实时投票数，每小时更新一次
 - voteGXCNumber: 投票数（快照读取后才有）
 - lastchangeTxid: 上一次更改投票交易Txid
 - changeTimes: 更改次数(前后两次一样算无更改)
