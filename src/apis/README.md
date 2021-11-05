@@ -86,3 +86,18 @@ curl 127.0.0.1:port/api/statistics | json_pp
 - totalVoteGXCNumber : 投票总数
 - totalVoteGXCNumberTrue : 投True总票数
 - totalVoteGXCNumberFalse : 投False总票数
+
+### date
+```sh
+curl 127.0.0.1:port/api/date | json_pp
+```
+
+返回信息:```json
+{
+   "stopTime" : "2021-11-15T14:11:27.000Z",
+   "startTime" : "2021-09-16T18:52:57.000Z"
+}
+
+- stopTime :截止时间
+- startTime :开始时间
+```

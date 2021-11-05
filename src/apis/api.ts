@@ -39,4 +39,18 @@ router.get("/state", async (req, res) => {
   }
 });
 
+router.get("/date", async (req, res) => {
+  try {
+    const startTime = new Date(
+      (await gxclient.getBlock(config.gxc.startblock)).timestamp
+    );
+    const stopTime = new Date(
+      startTime.getTime() + 3000 * (config.gxc.endblock - config.gxc.startblock)
+    );
+    res.send({ startTime: startTime, stopTime: stopTime });
+  } catch (err) {
+    throw err;
+  }
+});
+
 module.exports = router;
