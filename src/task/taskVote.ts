@@ -92,14 +92,22 @@ const dealWithVote = async (txid: any, op: any) => {
     let params = deserializeCallData("vote", op[1].data, abi);
     logger.info("Vote received", params);
     let Account = await gxclient.getObject(op[1].account);
-    // let gxcBalanceObject = (
-    //   await gxclient.getAccountBalances(Account.name)
-    // ).find((item) => item.asset_id == "1.3.1");
-    // let voteGXCNumber = gxcBalanceObject ? Number(gxcBalanceObject.amount) : 0;
-    // const stakings = await gxclient._query("get_staking_objects", [Account.id]);
-    // stakings.forEach((element: any) => {
-    //   voteGXCNumber = voteGXCNumber + Number(element.amount.amount);
-    // });
+    let gxcBalanceObject = (
+      await gxclient.getAccountBalances(Account.name)
+    ).find((item) => item.asset_id == "1.3.1");
+    let voteGXCNumberHourly = gxcBalanceObject
+      ? Number(gxcBalanceObject.amount)
+      : 0;
+    let stakings: any = undefined;
+    try {
+      stakings = await gxclient._query("get_staking_objects", [Account.id]);
+    } catch (err) {}
+    if (stakings) {
+      stakings.forEach((element: any) => {
+        voteGXCNumberHourly =
+          voteGXCNumberHourly + Number(element.amount.amount);
+      });
+    }
     let record = await Voter.findByPk(Account.name);
     if (record === null) {
       await Voter.create(
@@ -110,6 +118,7 @@ const dealWithVote = async (txid: any, op: any) => {
           lastchangeTxid: txid,
           changeTimes: 0,
           voteGXCNumber: 0n,
+          voteGXCNumberHourly: BigInt(voteGXCNumberHourly),
         },
         { transaction }
       );
@@ -154,13 +163,13 @@ const _startAfterSync = async (callback: any) => {
   }
 };
 
-// const sleep = async (time: number) => {
-//   return new Promise<void>((resolve) => {
-//     setTimeout(() => {
-//       resolve();
-//     }, time);
-//   });
-// };
+const sleep = async (time: number) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+};
 
 export const start = async () => {
   readState();
@@ -176,6 +185,7 @@ export const start = async () => {
       }
     });
   });
+  calculateGXCNumberHourly();
 };
 
 export const saveState = () => {
@@ -191,5 +201,46 @@ export const saveState = () => {
     fs.writeFileSync(STATE_FILE, fileCount);
   } catch (ex) {
     logger.error("Error: Saving gxc.json", ex);
+  }
+};
+
+const calculateGXCNumberHourly = async () => {
+  while (1) {
+    logger.info("start statistics voter's gxc number Hourly", new Date());
+    await sequelize.sync();
+    const transaction = await sequelize.transaction();
+    try {
+      const voters = await Voter.findAll({ transaction });
+      await Promise.all(
+        voters.map(async (voter) => {
+          let gxcBalanceObject = (
+            await gxclient.getAccountBalances(voter.userName)
+          ).find((item) => item.asset_id == "1.3.1");
+          let voteGXCNumberHourly = gxcBalanceObject
+            ? Number(gxcBalanceObject.amount)
+            : 0;
+          let stakings: any = undefined;
+          try {
+            stakings = await gxclient._query("get_staking_objects", [
+              voter.userId,
+            ]);
+          } catch (err) {}
+          if (stakings) {
+            stakings.forEach((element: any) => {
+              voteGXCNumberHourly =
+                voteGXCNumberHourly + Number(element.amount.amount);
+            });
+          }
+          voter.voteGXCNumberHourly = BigInt(voteGXCNumberHourly);
+          return await voter.save({ transaction });
+        })
+      );
+      await transaction.commit();
+      logger.info("end statistics voter's gxc number Hourly", new Date());
+    } catch (err) {
+      await transaction.rollback();
+      logger.error(err, new Date());
+    }
+    await sleep(3600000);
   }
 };

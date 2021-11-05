@@ -9,6 +9,7 @@ export declare interface Voter {
   lastchangeTxid: string;
   changeTimes: number;
   voteGXCNumber: bigint;
+  voteGXCNumberHourly: bigint;
 }
 
 Voter.init(
@@ -33,6 +34,9 @@ Voter.init(
       type: DataTypes.INTEGER,
     },
     voteGXCNumber: {
+      type: DataTypes.BIGINT,
+    },
+    voteGXCNumberHourly: {
       type: DataTypes.BIGINT,
     },
   },
