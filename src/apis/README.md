@@ -10,45 +10,30 @@ curl 127.0.0.1:port/api/apiname
 获取投票人和其信息
 
 ```sh
-curl 127.0.0.1:port/api/voter | json_pp
+ curl "127.0.0.1:3031/api/voter?limit=1&offset=1" | json_pp
 ```
 
 返回信息：
 ```json
 {
+   "resultsSum" : 2,
    "result" : [
       {
-         "lastchangeTxid" : "7eeff0afa395ce6349f6753a16d7c7f18801e327",
-         "changeTimes" : 4,
-         "updatedAt" : "2021-09-29T08:29:59.000Z",
-         "voteGXCNumber" : 7642,
-         "voteGXCNumberHourly" : 7642,
-         "votingstate" : false,
-         "userId" : "1.2.22",
-         "userName" : "dev",
-         "createdAt" : "2021-09-28T02:48:52.000Z"
-      }
-   ],
-   "resultTrue" : [],
-   "resultFalse" : [
-      {
-         "voteGXCNumberHourly" : 7642,
-         "voteGXCNumber" : 7642,
-         "lastchangeTxid" : "7eeff0afa395ce6349f6753a16d7c7f18801e327",
-         "changeTimes" : 4,
-         "updatedAt" : "2021-09-29T08:29:59.000Z",
-         "userId" : "1.2.22",
-         "votingstate" : false,
-         "userName" : "dev",
-         "createdAt" : "2021-09-28T02:48:52.000Z"
+         "updatedAt" : "2021-11-15T10:43:47.000Z",
+         "userName" : "gxc-relay",
+         "voteGXCNumber" : 0,
+         "voteGXCNumberHourly" : 24067506,
+         "userId" : "1.2.4707",
+         "createdAt" : "2021-11-05T07:09:14.000Z",
+         "changeTimes" : 0,
+         "lastchangeTxid" : "cc545fea87bee0361bf91056a0b8a80b3ea26ab9",
+         "votingstate" : true
       }
    ]
 }
 ```
-- result:所有投票人的信息
-- resultTrue:所有投True人的信息
-- resultFalse：所有投False人的信息
-  
+- resultsSum:共有几条记录
+- result:返回的记录
 --------------
 - voteGXCNumberHourly:实时投票数，每小时更新一次
 - voteGXCNumber: 投票数（快照读取后才有）
@@ -57,6 +42,33 @@ curl 127.0.0.1:port/api/voter | json_pp
 - userId : 账户ID
 - userName : 账户名字
 - votingstate : 投票状态
+
+
+### voter_sum
+获取投票总和
+
+```sh 
+curl 127.0.0.1:port/api/voter_sum | json_pp
+```
+返回信息:
+```json
+{
+   "voterGXCTrueSum" : 3345529565315,
+   "voterGXCFalseSum" : null,
+   "voterGXCSum" : 3345529565315,
+   "voterNum" : 2,
+   "voterFalseNum" : 0,
+   "voterTrueNum" : 2
+}
+```
+- voterNum: 投票总人数
+- voterTrueNum:投true的总人数
+- voterFalseNum:投false的总人数
+- voterGXCSum: 投票总gxc数
+- voterGXCTrueSum:投票true总gxc数
+- voterGXCFalseSum:投票false总gxc数
+
+
 
 ### statistics（快照读取后才调用）
 ```sh 
