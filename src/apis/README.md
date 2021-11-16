@@ -5,6 +5,30 @@ vote_monitor APi
 curl 127.0.0.1:port/api/apiname
 ```
 
+### findone
+获取一个投票人的信息
+
+```sh
+ curl -s "127.0.0.1:3031/api/findone?name=dev"| json_pp
+```
+
+返回的信息
+
+```json
+{
+   "updatedAt" : "2021-11-16T03:48:36.000Z",
+   "changeTimes" : 1,
+   "createdAt" : "2021-11-05T07:00:02.000Z",
+   "userName" : "dev",
+   "lastchangeTxid" : "d11634a208e72f6796e8bcea96584c1984a53a37",
+   "voteGXCNumber" : 0,
+   "voteGXCNumberHourly" : 3345505497809,
+   "userId" : "1.2.22",
+   "votingstate" : true
+}
+
+```
+
 ### voter
 
 获取投票人和其信息

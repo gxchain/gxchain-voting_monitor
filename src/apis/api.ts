@@ -6,6 +6,16 @@ import { config } from "../config/config";
 
 const router = express.Router();
 
+router.get("/findone", async (req, res) => {
+  try {
+    const name = req.query.name;
+    let result = await Voter.findOne({ where: { userName: name } });
+    res.send(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
 router.get("/voter", async (req, res) => {
   try {
     const offset = req.query.offset ? Number(req.query.offset) : 0;
