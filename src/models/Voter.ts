@@ -16,7 +16,7 @@ Voter.init(
   {
     userName: {
       type: DataTypes.STRING,
-      primaryKey: true,
+      // primaryKey: true,
       comment: "user name of GXChain",
     },
     userId: {
@@ -42,6 +42,7 @@ Voter.init(
   },
   {
     sequelize,
+    engine: "MyISAM",
     indexes: [
       {
         unique: true,

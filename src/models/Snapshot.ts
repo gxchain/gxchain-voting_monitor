@@ -12,7 +12,7 @@ Snapshot.init(
   {
     objectID: {
       type: DataTypes.STRING,
-      primaryKey: true,
+      // primaryKey: true,
       comment: "object id",
     },
     owner: {
