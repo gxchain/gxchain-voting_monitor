@@ -21,7 +21,11 @@ router.get("/voter", async (req, res) => {
     const offset = req.query.offset ? Number(req.query.offset) : 0;
     const limit = req.query.limit ? Number(req.query.limit) : 10;
     const resultsSum = await Voter.count();
-    let result = await Voter.findAll({ offset: offset, limit: limit });
+    let result = await Voter.findAll({
+      order: [["createdAt", "DESC"]],
+      offset: offset,
+      limit: limit,
+    });
     res.send({ result, resultsSum });
   } catch (err) {
     throw err;
