@@ -16,7 +16,7 @@ Voter.init(
   {
     userName: {
       type: DataTypes.STRING,
-      // primaryKey: true,
+      primaryKey: true,
       comment: "user name of GXChain",
     },
     userId: {
@@ -52,3 +52,5 @@ Voter.init(
     tableName: "voting_monitor",
   }
 );
+
+export default Voter;

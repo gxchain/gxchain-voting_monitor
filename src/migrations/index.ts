@@ -21,7 +21,7 @@ const models = travel(path.resolve(__dirname, "../models"));
   for (const m of models) {
     const model = require(m).default;
     logger.info("syncing", m);
-    const result = await model.sync({ alter: true });
+    const result = await model.sync({ alter: true, rowFormat: "DYNAMIC" });
     logger.info("syncing finished", result);
   }
 })();
