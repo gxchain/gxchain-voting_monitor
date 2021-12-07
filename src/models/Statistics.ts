@@ -2,7 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../db";
 export class Statistics extends Model {}
 
-export declare interface c {
+export declare interface Statistics {
   voteUserNumber: number;
   totalVoteGXCNumber: bigint;
   voteUserNumberTrue: number;
